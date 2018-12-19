@@ -101,6 +101,7 @@ class HttpUtil {
 
       if(url.contains(Api.LOGIN)){
         SharedPreferences sp = await SharedPreferences.getInstance();
+        print("cookie=="+res.headers["set-cookie"]);
         sp.setString("cookie",res.headers["set-cookie"]);
       }
 
@@ -110,6 +111,7 @@ class HttpUtil {
       if(callback != null && errorCode >= 0){
         callback(data);
       }
+      
       if(errorCallback != null && errorCode < 0){
         _handError(errorCallback, errorMsg);
       }

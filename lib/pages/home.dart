@@ -5,6 +5,13 @@ import 'package:dxmdemo01/pages/day0.dart';
 import 'package:dxmdemo01/pages/day1.dart';
 import 'package:dxmdemo01/pages/day3.dart';
 import 'package:dxmdemo01/pages/dxm1.dart';
+import 'package:dxmdemo01/pages/LoginPage.dart';
+import 'package:dxmdemo01/pages/ArticleDetailPage.dart';
+import 'package:dxmdemo01/pages/AboutUsPage.dart';
+import 'package:dxmdemo01/widget/EndLine.dart';
+import 'package:dxmdemo01/pages/HomeListPage.dart';
+import 'package:dxmdemo01/pages/ArticleListPage.dart';
+import 'package:dxmdemo01/http/Api.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -53,6 +60,23 @@ class HomePage extends StatelessWidget {
            menuIcons(context, Icon(FontAwesomeIcons.stopwatch, size: 48.0, color: Color(0xFFFF856C)), 'Day1' ,Day1Page()),
            menuIcons(context, Icon(FontAwesomeIcons.smile, size: 48.0, color: Color(0xFFFF856C)), 'Dxm1' ,Dxm1Page()),
            menuIcons(context, Icon(FontAwesomeIcons.twitter, size: 48.0, color: Color(0xFFFF856C)), 'Dxm3' ,Day3Page()),
+           menuIcons(context, Icon(FontAwesomeIcons.sign, size: 48.0, color: Color(0xFFFF856C)), 'Login' ,LoginPage()),
+           menuIcons(context, Icon(FontAwesomeIcons.desktop, size: 48.0, color: Color(0xAAFF856C)), 'WebView' ,ArticleDetailPage(title: 'webview',url: 'http://192.168.1.53:7777/vw')),
+           menuIcons(context, Icon(FontAwesomeIcons.user, size: 48.0, color: Color(0xCC22856C)), 'About me' ,AboutUsPage()),
+           menuIcons(context, Icon(FontAwesomeIcons.database, size: 48.0, color: Color(0xAAC22856C)), 'About me' ,EndLine(msg: '实在拉不出来了',)),
+           menuIcons(context, Icon(FontAwesomeIcons.home, size: 48.0, color: Color(0xCC00857C)), 'HomePageList' ,HomeListPage()),
+           menuIcons(context, Icon(FontAwesomeIcons.desktop, size: 48.0, color: Color(0xCCBB0857C)), 'HomePageList' ,ArticleListPage(urlCallback: (curPage){
+              String url = Api.ARTICLE_LIST;
+              url += "$curPage/json";
+              print("回调---$url");
+              return url;
+           },)),
+           menuIcons(context, Icon(Icons.favorite, size: 48.0, color: Color(0xCCDD0857C)), 'Love' ,ArticleListPage(urlCallback: (curPage){
+              String url = Api.COLLECT_LIST;
+              url += "$curPage/json";
+              print("回调---$url");
+              return url;
+           },)),
         ],
       ),
     );
