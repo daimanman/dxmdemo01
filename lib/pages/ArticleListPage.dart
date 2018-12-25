@@ -11,7 +11,8 @@ class ArticleListPage extends StatefulWidget{
   String url;
   String method;
   Function urlCallback;
-  ArticleListPage({this.url,this.method,this.urlCallback});
+  String cid;
+  ArticleListPage({this.url,this.method,this.urlCallback,this.cid});
   @override
   State<StatefulWidget> createState() {
     return ArticleListPageState();
@@ -28,6 +29,7 @@ class ArticleListPageState extends State<ArticleListPage>{
   TextStyle titleTextStyle = TextStyle(fontSize:15.0);
   TextStyle subtitleTextStyle = TextStyle(fontSize: 12.0,color:Colors.blue);
   SlideView _bannerView;
+  Map<String,String> map = new Map();
 
    @override
   void initState(){
@@ -88,6 +90,7 @@ class ArticleListPageState extends State<ArticleListPage>{
   void getArticlelist(){
     String url = Api.ARTICLE_LIST;
     url += "$curPage/json";
+    map["cid"] = widget.cid;
     print("====当前页 $curPage");
     if(null != widget.urlCallback){
       url = widget.urlCallback(curPage);
@@ -116,7 +119,7 @@ class ArticleListPageState extends State<ArticleListPage>{
         });
     },errorCallback:(msg){
         print("请求文章列表错误");
-    });
+    },params: map);
   }
 
   Widget buileItem(int i){
