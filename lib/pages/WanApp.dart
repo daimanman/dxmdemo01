@@ -3,6 +3,7 @@ import 'package:dxmdemo01/constant/colors.dart';
 import 'package:dxmdemo01/pages/HomeListPage.dart';
 import 'package:dxmdemo01/pages/MyInfoPage.dart';
 import 'package:dxmdemo01/pages/TreePage.dart';
+import 'package:dxmdemo01/pages/SearchPage.dart';
 
 class WanApp extends StatefulWidget{
   @override
@@ -59,13 +60,16 @@ class WanAppState extends State<WanApp> with TickerProviderStateMixin {
         appBar: AppBar(
           title: Text(
             appBarTitles[_tabIndex],
-            style: TextStyle(color: Colors.blue),
+            style: TextStyle(color: Colors.white10),
           ),
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search),
               onPressed: (){
-                print("ok search");
+                navigatorKey.currentState
+                      .push(new MaterialPageRoute(builder: (context) {
+                    return new SearchPage(null);
+                  }));
               },
             ),
           ],

@@ -12,7 +12,9 @@ class ArticleListPage extends StatefulWidget{
   String method;
   Function urlCallback;
   String cid;
-  ArticleListPage({this.url,this.method,this.urlCallback,this.cid});
+  String searchKey;
+  ArticleListPage({this.url,this.method,this.urlCallback,this.cid,this.searchKey});
+  ArticleListPage.fromKey(ValueKey<String> key,{this.url,this.method,this.urlCallback,this.cid,this.searchKey}):super(key:key);
   @override
   State<StatefulWidget> createState() {
     return ArticleListPageState();
@@ -86,18 +88,8 @@ class ArticleListPageState extends State<ArticleListPage>{
   }
 
   
-
-  void getArticlelist(){
-    String url = Api.ARTICLE_LIST;
-    url += "$curPage/json";
-    map["cid"] = widget.cid;
-    print("====当前页 $curPage");
-    if(null != widget.urlCallback){
-      url = widget.urlCallback(curPage);
-    }
-    print(url);
-    HttpUtil.get(url,(data){
-        if(data == null){
+  void dealArticle(var data){
+     if(data == null){
           return;
         }
         Map<String,dynamic> map = data;
@@ -117,9 +109,32 @@ class ArticleListPageState extends State<ArticleListPage>{
                 }
                 listData = list1;  
         });
-    },errorCallback:(msg){
-        print("请求文章列表错误");
-    },params: map);
+  }
+  void getArticlelist(){
+    String url = Api.ARTICLE_LIST;
+    url += "$curPage/json";
+    if(widget.cid != null && widget.cid.isNotEmpty){
+      map["cid"] = widget.cid;
+    }
+    if(widget.searchKey != null && widget.searchKey.isNotEmpty){
+      map["k"] = widget.searchKey;
+    }
+    
+    print("====当前页 $curPage jsonMap=${map}");
+    if(null != widget.urlCallback){
+      url = widget.urlCallback(curPage);
+    }
+    print(url);
+    if(widget.method != null && widget.method.isNotEmpty && widget.method.toUpperCase().startsWith('POST')){
+        HttpUtil.post(url, dealArticle,errorCallback: (msg){
+          print("post 请求文章列表错误 $msg");
+        },params: map);
+    }else{
+      HttpUtil.get(url,dealArticle,errorCallback:(msg){
+            print("get 请求文章列表错误 $msg");
+        },params: map);
+    }
+  
   }
 
   Widget buileItem(int i){
@@ -133,6 +148,9 @@ class ArticleListPageState extends State<ArticleListPage>{
     var itemData = listData[i];
     if(itemData is String && itemData == Constants.END_LINE_TAG){
       return EndLine(msg:"真的没有了");
+    }
+    if(widget.searchKey != null ){
+      itemData['isSearch'] = true;
     }
     return ArticleItem(itemData);
   }

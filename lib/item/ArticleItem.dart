@@ -93,7 +93,7 @@ class ArticleItemState extends State<ArticleItem>{
       children: <Widget>[
         Expanded(
           child: Text.rich(
-            widget.isSearch ? StringUtils.getTextSpan(widget.itemData["title"],widget.id) : TextSpan(text:widget.itemData['title']),
+            widget.itemData['isSearch']??false ? StringUtils.getTextSpan(widget.itemData["title"],'${widget.itemData["id"]}') : TextSpan(text:widget.itemData['title']),
             softWrap: true,
             style:TextStyle(fontSize:16.0,color:Colors.black),
             textAlign: TextAlign.left,
@@ -106,7 +106,7 @@ class ArticleItemState extends State<ArticleItem>{
       children: <Widget>[
         Expanded(
           child: Text(
-            widget.isSearch ? '' : widget.itemData['chapterName'],
+            widget.isSearch ? false : widget.itemData['chapterName'],
             softWrap: true,
             style:TextStyle(color: Theme.of(context).accentColor),
             textAlign: TextAlign.left,

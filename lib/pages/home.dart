@@ -14,6 +14,7 @@ import 'package:dxmdemo01/pages/ArticleListPage.dart';
 import 'package:dxmdemo01/http/Api.dart';
 import 'package:dxmdemo01/pages/TreePage.dart';
 import 'package:dxmdemo01/pages/WanApp.dart';
+import 'package:dxmdemo01/pages/HotPage.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -81,6 +82,7 @@ class HomePage extends StatelessWidget {
            },)),
            menuIcons(context, Icon(FontAwesomeIcons.tree, size: 48.0, color: Color(0xCC00857C)), 'Tree' ,TreePage()),
            menuIcons(context, Icon(FontAwesomeIcons.addressCard, size: 48.0, color: Color(0xCC00857C)), 'WanApp' ,WanApp()),
+           menuIcons(context, Icon(FontAwesomeIcons.hotTub, size: 48.0, color: Color(0xCC00857C)), 'HotPageDemo' ,HotPageDemo()),
         ],
       ),
     );
